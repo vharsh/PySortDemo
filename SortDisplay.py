@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 from Orderable import Orderable
 from Comparator import Comparator
 from Markers import Markers
