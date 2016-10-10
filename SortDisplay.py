@@ -9,6 +9,7 @@ from optparse import OptionParser
 from time import sleep
 import copy
 
+
 class SortDisplay:
     """Visualization of sorting algorithms."""
     def __init__(self, algorithm, stop_event, options, compare=None):
@@ -20,8 +21,7 @@ class SortDisplay:
         self.compare = compare
 
         self.stop = False
-        self.cstop = compare == None
-
+        self.cstop = True if compare is None else False
         self.items = Orderable(self.numLines)
         self.cmp = Comparator(self.items)
         self.markers = Markers()
@@ -30,7 +30,7 @@ class SortDisplay:
 
         self.gen = algorithm.sort()
 
-        if compare != None:
+        if compare is not None:
             self.citems = copy.deepcopy(self.items)
             self.ccmp = Comparator(self.citems)
             self.cmarkers = Markers()
@@ -40,10 +40,12 @@ class SortDisplay:
 
         pygame.init()
 
-        if compare == None:
-            self.window = pygame.display.set_mode((self.width, 6 * (self.numLines+1)))
+        if compare is None:
+            self.window = pygame.display.set_mode((self.width,
+                                                   6 * (self.numLines+1)))
         else:
-            self.window = pygame.display.set_mode((self.width * 2 + 5, 6 * (self.numLines+1)))
+            self.window = pygame.display.set_mode((self.width * 2 + 5,
+                                                   6 * (self.numLines+1)))
 
         self.i = 0
         self.update()
@@ -54,15 +56,16 @@ class SortDisplay:
 
         self.__update_algorithm(self.items.items, self.markers.markers, 0)
 
-        if self.compare != None:
-            self.__update_algorithm(self.citems.items, self.cmarkers.markers, self.width + 5)
+        if self.compare is not None:
+            self.__update_algorithm(self.citems.items,
+                                    self.cmarkers.markers, self.width + 5)
 
         pygame.display.flip()
 
     def __update_algorithm(self, items, markers, xoffset=0):
         for i in range(0, len(items)):
             y = 6 * (i+1)
-            pygame.draw.line(self.window, (0, 0, 0), (3 + xoffset, y),\
+            pygame.draw.line(self.window, (0, 0, 0), (3 + xoffset, y),
                              ((self.width-6) * items[i] + 3 + xoffset, y))
 
         for id, marker in markers.iteritems():
@@ -79,7 +82,7 @@ class SortDisplay:
                 except:
                     xEnd = 3
 
-            pygame.draw.line(self.window, marker['color'],\
+            pygame.draw.line(self.window, marker['color'],
                              (xStart + xoffset, y), (xEnd + xoffset, y))
 
     def step(self):
@@ -88,7 +91,7 @@ class SortDisplay:
         except StopIteration:
             self.stop = True
 
-        if self.compare != None:
+        if self.compare is not None:
             try:
                 self.cgen.next()
             except StopIteration:
@@ -138,8 +141,8 @@ def main():
                       dest='compare', choices=algorithms.keys(),
                       help='algorithm to compare with')
     (options, args) = parser.parse_args()
-    algorithm = algorithms[options.algorithm];
-    compare = None if options.compare == None else algorithms[options.compare]
+    algorithm = algorithms[options.algorithm]
+    compare = None if options.compare is None else algorithms[options.compare]
 
     stopEvent = Event()
 
@@ -167,11 +170,10 @@ def main():
 
     print disp.items.swaps, "swaps"
     print disp.cmp.comparisons, "comparisons"
-    if compare != None:
+    if compare is not None:
         print "comparison:"
         print disp.citems.swaps, "swaps"
         print disp.ccmp.comparisons, "comparisons"
 
 if __name__ == "__main__":
     main()
-
