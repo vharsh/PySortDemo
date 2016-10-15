@@ -1,5 +1,6 @@
 from SortAlgorithm import SortAlgorithm
 
+
 class HeapSort(SortAlgorithm):
     """
     Implements heapsort.
@@ -21,7 +22,9 @@ class HeapSort(SortAlgorithm):
                 yield
 
     def maxHeapify(self, i, heapSize):
+
         def left(i): return 2*i+1
+
         def right(i): return 2*(i+1)
         (l, r, largest) = (left(i), right(i), i)
 

@@ -21,7 +21,7 @@ class SortDisplay:
         self.compare = compare
 
         self.stop = False
-        self.cstop = True if compare is None else False
+        self.cstop = compare is None
         self.items = Orderable(self.numLines)
         self.cmp = Comparator(self.items)
         self.markers = Markers()
