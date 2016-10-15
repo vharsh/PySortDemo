@@ -41,11 +41,9 @@ class SortDisplay:
         pygame.init()
 
         if compare is None:
-            self.window = pygame.display.set_mode((self.width,
-                                                   6 * (self.numLines+1)))
+            self.window = pygame.display.set_mode((self.width, 6 * (self.numLines+1)))
         else:
-            self.window = pygame.display.set_mode((self.width * 2 + 5,
-                                                   6 * (self.numLines+1)))
+            self.window = pygame.display.set_mode((self.width * 2 + 5, 6 * (self.numLines+1)))
 
         self.i = 0
         self.update()
@@ -57,8 +55,7 @@ class SortDisplay:
         self.__update_algorithm(self.items.items, self.markers.markers, 0)
 
         if self.compare is not None:
-            self.__update_algorithm(self.citems.items,
-                                    self.cmarkers.markers, self.width + 5)
+            self.__update_algorithm(self.citems.items, self.cmarkers.markers, self.width + 5)
 
         pygame.display.flip()
 
